@@ -1,0 +1,17 @@
+{
+  "name": "twedis",
+  "version": "1.0.0",
+  "description": "Display Timeline Tweets Application",
+  "main": "main.js",
+  "scripts": {
+    "electron": "npx electron ./",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "AtryzA",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^10.1.3",
+    "express": "^4.17.1",
+    "twitter": "^1.7.1"
+  }
+}
