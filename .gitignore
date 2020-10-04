@@ -105,3 +105,4 @@ dist
 
 # Add module file
 test.http
+secret.json
