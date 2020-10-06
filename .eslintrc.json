@@ -23,6 +23,7 @@
         "no-extra-semi": "error",
         "no-unexpected-multiline": "error",
         "no-unreachable": "error",
+        "no-unused-vars": "off",
         "quotes": [2, "single"],
         "strict": [2, "never"],
         "no-console": 0
