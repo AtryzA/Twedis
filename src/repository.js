@@ -1,8 +1,36 @@
 const client = require('./client');
 
 module.exports = class repository {
-    static getProfileByUserID(user_name) {
-        const params = {screen_name: user_name};
+    static getTimeline(params) {
+        return new Promise((resolve, reject) => {
+            client.get('statuses/home_timeline', params, (error, tweets) => {
+                if (error) {
+                    reject(error);
+                }
+                const fixedTimeline = [];
+                for(const tweet of tweets) {
+                    fixedTimeline.push({
+                        'user_name': tweet.user.name,
+                        'screen_name': tweet.user.screen_name,
+                        'verified': tweet.user.verified,
+                        'tweet' : tweet.retweeted_status? null : tweet.text,
+                        'created_at': tweet.created_at,
+                        'in_reply_to_screen_name': tweet.in_reply_to_screen_name,
+                        'retweeted_status_name':  tweet.retweeted_status? tweet.retweeted_status.user.name : null,
+                        'retweeted_status_screen_name': tweet.retweeted_status? tweet.retweeted_status.user.screen_name : null,
+                        'retweeted_status_verified': tweet.retweeted_status? tweet.retweeted_status.user.verified : null,
+                        'retweeted_status_created_at': tweet.retweeted_status? tweet.retweeted_status.created_at : null,
+                        'retweeted_status_tweet': tweet.retweeted_status? tweet.retweeted_status.text : null,
+                        'retweet_count': tweet.retweeted_status? tweet.retweeted_status.retweet_count : tweet.retweet_count,
+                        'favorite_count': tweet.retweeted_status? tweet.retweeted_status.favorite_count : tweet.favorite_count
+                    });
+                }
+                resolve(fixedTimeline);
+            });
+        });
+    }
+
+    static getProfile(params) {
         return new Promise((resolve, reject) => {
             client.get('users/show', params, (error, data) => {
                 if (error) {
@@ -11,6 +39,7 @@ module.exports = class repository {
                 const fixedProfile = {
                     'name': data.name,
                     'screen_name': data.screen_name,
+                    'verified': data.verified,
                     'protected': data.protected,
                     'location': data.location,
                     'description': data.description,
@@ -27,42 +56,18 @@ module.exports = class repository {
         });
     }
 
-    static getTweetByUserID(user_name) {
-        const params = {screen_name: user_name};
-        return new Promise((resolve, reject) => {
-            client.get('statuses/user_timeline', params, (error, tweets) => {
-                if (error) {
-                    reject(error);
-                }
-                const fixedTweet = [];
-                for(const tweet of tweets) {
-                    fixedTweet.push({
-                        'tweet' : tweet.retweeted_status? null : tweet.text,
-                        'created_at': tweet.created_at,
-                        'in_reply_to_screen_name': tweet.in_reply_to_screen_name,
-                        'retweeted_status_created_at': tweet.retweeted_status? tweet.retweeted_status.created_at : null,
-                        'retweeted_status_tweet': tweet.retweeted_status? tweet.retweeted_status.text : null,
-                        'retweet_count': tweet.retweeted_status? tweet.retweeted_status.retweet_count : tweet.retweet_count,
-                        'favorite_count': tweet.retweeted_status? tweet.retweeted_status.favorite_count : tweet.favorite_count
-                    });
-                }
-                resolve(fixedTweet);
-            });
-        });
-    }
-
-    static getFollowByUserID(user_name) {
-        const params = {screen_name: user_name, cursor: -1};
+    static getFollowsByUserID(params) {
         return new Promise((resolve, reject) => {
             client.get('friends/list', params, (error, friends) => {
                 if (error) {
                     reject(error);
                 }
-                const fixedFollow = [];
+                const fixedFollows = [];
                 for(const friend of friends.users) {
-                    fixedFollow.push({
+                    fixedFollows.push({
                         'name': friend.name,
                         'screen_name': friend.screen_name,
+                        'verified': friend.verified,
                         'protected': friend.protected,
                         'location': friend.location,
                         'description': friend.description,
@@ -75,23 +80,23 @@ module.exports = class repository {
                         'profile_image_url': friend.profile_image_url
                     });
                 }
-                resolve(fixedFollow);
+                resolve(fixedFollows);
             });
         });
     }
 
-    static getFollowerByUserID(user_name) {
-        const params = {screen_name: user_name, cursor: -1};
+    static getFollowersByUserID(params) {
         return new Promise((resolve, reject) => {
             client.get('followers/list', params, (error, followers) => {
                 if (error) {
                     reject(error);
                 }
-                const fixedFollower = [];
+                const fixedFollowers = [];
                 for(const follower of followers.users) {
-                    fixedFollower.push({
+                    fixedFollowers.push({
                         'name': follower.name,
                         'screen_name': follower.screen_name,
+                        'verified': follower.verified,
                         'protected': follower.protected,
                         'location': follower.location,
                         'description': follower.description,
@@ -104,7 +109,63 @@ module.exports = class repository {
                         'profile_image_url': follower.profile_image_url
                     });
                 }
-                resolve(fixedFollower);
+                resolve(fixedFollowers);
+            });
+        });
+    }
+
+    static getTweetsByUserID(params) {
+        return new Promise((resolve, reject) => {
+            client.get('statuses/user_timeline', params, (error, tweets) => {
+                if (error) {
+                    reject(error);
+                }
+                const fixedTweets = [];
+                for(const tweet of tweets) {
+                    fixedTweets.push({
+                        'tweet' : tweet.retweeted_status? null : tweet.text,
+                        'created_at': tweet.created_at,
+                        'verified': tweet.verified,
+                        'in_reply_to_screen_name': tweet.in_reply_to_screen_name,
+                        'retweeted_status_name':  tweet.retweeted_status? tweet.retweeted_status.user.name : null,
+                        'retweeted_status_screen_name': tweet.retweeted_status? tweet.retweeted_status.user.screen_name : null,
+                        'retweeted_status_verified': tweet.retweeted_status? tweet.retweeted_status.user.verified : null,
+                        'retweeted_status_created_at': tweet.retweeted_status? tweet.retweeted_status.created_at : null,
+                        'retweeted_status_tweet': tweet.retweeted_status? tweet.retweeted_status.text : null,
+                        'retweet_count': tweet.retweeted_status? tweet.retweeted_status.retweet_count : tweet.retweet_count,
+                        'favorite_count': tweet.retweeted_status? tweet.retweeted_status.favorite_count : tweet.favorite_count
+                    });
+                }
+                resolve(fixedTweets);
+            });
+        });
+    }
+
+    static searchTweets(params) {
+        return new Promise((resolve, reject) => {
+            client.get('search/tweets', params, (error, tweets) => {
+                if (error) {
+                    reject(error);
+                }
+                const fixedTweets = [];
+                for(const tweet of tweets.statuses) {
+                    fixedTweets.push({
+                        'user_name': tweet.user.name,
+                        'screen_name': tweet.user.screen_name,
+                        'verified': tweet.user.verified,
+                        'tweet' : tweet.retweeted_status? null : tweet.text,
+                        'created_at': tweet.created_at,
+                        'in_reply_to_screen_name': tweet.in_reply_to_screen_name,
+                        'retweeted_status_name':  tweet.retweeted_status? tweet.retweeted_status.user.name : null,
+                        'retweeted_status_screen_name': tweet.retweeted_status? tweet.retweeted_status.user.screen_name : null,
+                        'retweeted_status_verified': tweet.retweeted_status? tweet.retweeted_status.user.verified : null,
+                        'retweeted_status_created_at': tweet.retweeted_status? tweet.retweeted_status.created_at : null,
+                        'retweeted_status_tweet': tweet.retweeted_status? tweet.retweeted_status.text : null,
+                        'retweet_count': tweet.retweeted_status? tweet.retweeted_status.retweet_count : tweet.retweet_count,
+                        'favorite_count': tweet.retweeted_status? tweet.retweeted_status.favorite_count : tweet.favorite_count
+                    });
+                }
+                resolve(fixedTweets);
             });
         });
     }

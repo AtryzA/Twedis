@@ -1,9 +1,8 @@
 const repository = require('./repository');
 
 module.exports = class handler {
-    static getProfileByUserID(req, res) {
-        const user_name = req.user_name;
-        repository.getProfileByUserID(user_name).then((data) => {
+    static getTimeline(req, res) {
+        repository.getTimeline(req).then((data) => {
             res.send(data);
         }).catch((error) => {
             console.log(error);
@@ -11,19 +10,17 @@ module.exports = class handler {
         });
     }
 
-    static getTweetByUserID(req, res) {
-        const user_name = req.user_name;
-        repository.getTweetByUserID(user_name).then((tweets) => {
-            res.send(tweets);
+    static getProfile(req, res) {
+        repository.getProfile(req).then((data) => {
+            res.send(data);
         }).catch((error) => {
             console.log(error);
             res.send(error);
         });
     }
 
-    static getFollowByUserID(req, res) {
-        const user_name = req.user_name;
-        repository.getFollowByUserID(user_name).then((friends) => {
+    static getFollowsByUserID(req, res) {
+        repository.getFollowsByUserID(req).then((friends) => {
             res.send(friends);
         }).catch((error) => {
             console.log(error);
@@ -31,10 +28,27 @@ module.exports = class handler {
         });
     }
 
-    static getFollowerByUserID(req, res) {
-        const user_name = req.user_name;
-        repository.getFollowerByUserID(user_name).then((follower) => {
+    static getFollowersByUserID(req, res) {
+        repository.getFollowersByUserID(req).then((follower) => {
             res.send(follower);
+        }).catch((error) => {
+            console.log(error);
+            res.send(error);
+        });
+    }
+
+    static getTweetsByUserID(req, res) {
+        repository.getTweetsByUserID(req).then((tweets) => {
+            res.send(tweets);
+        }).catch((error) => {
+            console.log(error);
+            res.send(error);
+        });
+    }
+
+    static searchTweets(req, res) {
+        repository.searchTweets(req).then((results) => {
+            res.send(results);
         }).catch((error) => {
             console.log(error);
             res.send(error);

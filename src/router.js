@@ -2,24 +2,34 @@ const handler = require('./handler');
 const express = require('express');
 const router = express.Router();
 
+router.get('/timeline', (req, res) => {
+    const params = req.body;
+    handler.getTimeline(params, res);
+});
+
 router.get('/user', (req, res) => {
-    const user_name = req.body;
-    handler.getProfileByUserID(user_name, res);
+    const params = req.body;
+    handler.getProfile(params, res);
 });
 
-router.get('/tweet', (req, res) => {
-    const user_name = req.body;
-    handler.getTweetByUserID(user_name, res);
+router.get('/follows', (req, res) => {
+    const params = req.body;
+    handler.getFollowsByUserID(params, res);
 });
 
-router.get('/follow', (req, res) => {
-    const user_name = req.body;
-    handler.getFollowByUserID(user_name, res);
+router.get('/followers', (req, res) => {
+    const params = req.body;
+    handler.getFollowersByUserID(params, res);
 });
 
-router.get('/follower', (req, res) => {
-    const user_name = req.body;
-    handler.getFollowerByUserID(user_name, res);
+router.get('/tweets', (req, res) => {
+    const params = req.body;
+    handler.getTweetsByUserID(params, res);
+});
+
+router.get('/tweets/search', (req, res) => {
+    const params = req.body;
+    handler.searchTweets(params, res);
 });
 
 module.exports = router;
