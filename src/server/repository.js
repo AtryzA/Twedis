@@ -25,6 +25,7 @@ module.exports = class repository {
                         'favorite_count': tweet.retweeted_status? tweet.retweeted_status.favorite_count : tweet.favorite_count
                     });
                 }
+                //quote function
                 resolve(fixedTimeline);
             });
         });
