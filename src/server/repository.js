@@ -21,6 +21,11 @@ module.exports = class repository {
                         'retweeted_status_verified': tweet.retweeted_status? tweet.retweeted_status.user.verified : null,
                         'retweeted_status_created_at': tweet.retweeted_status? tweet.retweeted_status.created_at : null,
                         'retweeted_status_tweet': tweet.retweeted_status? tweet.retweeted_status.text : null,
+                        'quoted_status_name': !tweet.retweeted_status && tweet.is_quote_status? tweet.quoted_status.user.name : (tweet.is_quote_status? tweet.retweeted_status.quoted_status.user.name : null),
+                        'quoted_status_screen_name': !tweet.retweeted_status && tweet.is_quote_status? tweet.quoted_status.user.screen_name : (tweet.is_quote_status? tweet.retweeted_status.quoted_status.user.screen_name : null),
+                        'quoted_status_verified': !tweet.retweeted_status && tweet.is_quote_status? tweet.quoted_status.user.verified : (tweet.is_quote_status? tweet.retweeted_status.quoted_status.user.verified : null),
+                        'quoted_status_created_at': !tweet.retweeted_status && tweet.is_quote_status? tweet.quoted_status.created_at : (tweet.is_quote_status? tweet.retweeted_status.quoted_status.created_at : null),
+                        'quoted_status_tweet': !tweet.retweeted_status && tweet.is_quote_status? tweet.quoted_status.text : (tweet.is_quote_status? tweet.retweeted_status.quoted_status.text : null),
                         'retweet_count': tweet.retweeted_status? tweet.retweeted_status.retweet_count : tweet.retweet_count,
                         'favorite_count': tweet.retweeted_status? tweet.retweeted_status.favorite_count : tweet.favorite_count
                     });
@@ -133,6 +138,11 @@ module.exports = class repository {
                         'retweeted_status_verified': tweet.retweeted_status? tweet.retweeted_status.user.verified : null,
                         'retweeted_status_created_at': tweet.retweeted_status? tweet.retweeted_status.created_at : null,
                         'retweeted_status_tweet': tweet.retweeted_status? tweet.retweeted_status.text : null,
+                        'quoted_status_name': !tweet.retweeted_status && tweet.is_quote_status? tweet.quoted_status.user.name : (tweet.is_quote_status? tweet.retweeted_status.quoted_status.user.name : null),
+                        'quoted_status_screen_name': !tweet.retweeted_status && tweet.is_quote_status? tweet.quoted_status.user.screen_name : (tweet.is_quote_status? tweet.retweeted_status.quoted_status.user.screen_name : null),
+                        'quoted_status_verified': !tweet.retweeted_status && tweet.is_quote_status? tweet.quoted_status.user.verified : (tweet.is_quote_status? tweet.retweeted_status.quoted_status.user.verified : null),
+                        'quoted_status_created_at': !tweet.retweeted_status && tweet.is_quote_status? tweet.quoted_status.created_at : (tweet.is_quote_status? tweet.retweeted_status.quoted_status.created_at : null),
+                        'quoted_status_tweet': !tweet.retweeted_status && tweet.is_quote_status? tweet.quoted_status.text : (tweet.is_quote_status? tweet.retweeted_status.quoted_status.text : null),
                         'retweet_count': tweet.retweeted_status? tweet.retweeted_status.retweet_count : tweet.retweet_count,
                         'favorite_count': tweet.retweeted_status? tweet.retweeted_status.favorite_count : tweet.favorite_count
                     });
@@ -162,6 +172,11 @@ module.exports = class repository {
                         'retweeted_status_verified': tweet.retweeted_status? tweet.retweeted_status.user.verified : null,
                         'retweeted_status_created_at': tweet.retweeted_status? tweet.retweeted_status.created_at : null,
                         'retweeted_status_tweet': tweet.retweeted_status? tweet.retweeted_status.text : null,
+                        'quoted_status_name': !tweet.retweeted_status && tweet.is_quote_status? tweet.quoted_status.user.name : (tweet.is_quote_status? tweet.retweeted_status.quoted_status.user.name : null),
+                        'quoted_status_screen_name': !tweet.retweeted_status && tweet.is_quote_status? tweet.quoted_status.user.screen_name : (tweet.is_quote_status? tweet.retweeted_status.quoted_status.user.screen_name : null),
+                        'quoted_status_verified': !tweet.retweeted_status && tweet.is_quote_status? tweet.quoted_status.user.verified : (tweet.is_quote_status? tweet.retweeted_status.quoted_status.user.verified : null),
+                        'quoted_status_created_at': !tweet.retweeted_status && tweet.is_quote_status? tweet.quoted_status.created_at : (tweet.is_quote_status? tweet.retweeted_status.quoted_status.created_at : null),
+                        'quoted_status_tweet': !tweet.retweeted_status && tweet.is_quote_status? tweet.quoted_status.text : (tweet.is_quote_status? tweet.retweeted_status.quoted_status.text : null),
                         'retweet_count': tweet.retweeted_status? tweet.retweeted_status.retweet_count : tweet.retweet_count,
                         'favorite_count': tweet.retweeted_status? tweet.retweeted_status.favorite_count : tweet.favorite_count
                     });
